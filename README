@@ -1,0 +1,70 @@
+Duta Viorel-Ionut
+321CB
+Tema1 PA - GREEDY & DP
+
+============================== Informatii generale ============================
+
+	v[] - vectorul care contine elementele intregi
+	n - numarul elementelor din v
+	k - numarul elementelor pe care Tuzgu trebuie sa le elimine
+
+=============================== Problema 1 ====================================
+
+	Pentru rezolvarea acestui task am sortat vectorul de elemente folosind
+functia sort din java si, parcurgand elementele in ordine descrescatoare am
+calculat diferenta obtinuta pentru fiecare etapa a jocului. Daca n este impar,
+adun la rezultat cel mai mare element din v (Tuzgu alege n/2 + 1 numere) si 
+dupa, parcutgand restul elementelor din doi in doi, adun diferenta.
+	Fiecare jucator poate sa aleaga orice numar, iar pentru a maximiza 
+punctajul, ei aleg cel mai mare numar din vector. Am sortat elementele pentru
+a nu fi nevoit sa caut mereu cel mai mare element.
+
+=============================== Problema 2 ====================================
+
+	Am rezolvat aceasta problema folosind programarea dinamica. Prima pas il
+reprezinta completarea primei coloane din dp, o matrice cu n linii si n coloane
+(problema poate fi rezolvata si cu o matrice de n linii si k+1 coloane). dp[i][j]
+reprezinta raspunsul vectorul care contine primele i elemente din v (dupa sortare)
+din care au fost eliminate j. Pornind de la cazul de baza (dp[0][0] ... 
+dp[n-1][0]) , calculez solutia optima atunci cand elimin 1, 2 ... k elemente
+folosind recurenta dp[i][j] = Math.max( dp[i-1][j] - v[i], dp[i-1][j-1] ) ,cand
+este randul jucatorului Ritza sa aleaga un numar, sau dp[i][j] = Math.max( 
+dp[i-1][j] - v[i], dp[i-1][j-1] ) atunci cand Tuzgu alege un numar.
+	Folosind aceasta relatie, daca in v ramane un numar par de elemente, atunci
+solutia se afla in dp[n-1][k-1] pentru ca ultimul element trebuie sa fie cat
+mai mare, iar daca elementele ramase sunt in numar impar, raspunsul este dat de
+dp[n-1][k] pentru ca Ritza trebuie sa aleaga un element cat mai mic.
+	Folosind recurenta de mai sus, la fiecare noua etapa verific daca este
+optim sa elimin elementul curent sau sa il adaug la valoarea optima pentru i-1 
+elemente din care am eliminat j-1.
+
+=============================== Problema 3 ====================================
+
+	Primul pas in rezolvarea acestei probleme este alocarea unei matice double
+dp[n][n]. Pe diagonala principala am pus elementele din vectorul v (un mod
+ineficient de a obtine raspunsul si daca v are un singur element). Pe diagonala
+de deasupra diaginalei principale am pus modulul diferentei dintre doua
+elemente consecutive (daca v are doua elemente, atunci Tuzgu va alege mereu cel
+mai mare numar si din acest motiv am pus modulul). Lucrurile devind mai
+interesante atunci cand v are cel putin trei elemente: presupunem ca avem un
+vector cu trei elemente, mai ramane de calculat un sigur element din dp pentru
+a obtine raspunsul; dp[0][2] = Max( 8 - 2, 5 - 5 ) = 6 => ? = 6. 
+				Pentru a celcula raspunusl final, trebuie sa calculez inainte
+	5 2 ?		respunsul optim pentru toate subproblemele. Am ales sa dau ca
+	  3 5		"exemplu" acest caz in care v are doar trei elemente pentru ca
+	    8		atunci cand am mai multe elemente in v, totul se reduce la acest
+	    		caz de baza. Prima data, Tuzgu are de ales dintre 5 si 8, daca 
+alege 5, Ritza va lua 8 si lui Tuzgu ii ramane 3 (raspunsul fiind 0), iar daca
+alege numarul 8, raspunsul este 6. Aplicand acest algoritm, raspunsul problemei
+va fi dat de dp[0][n-1] si se pe raspunusl optim pentru subproblema cu elementele
+de la 0 la n-2, respectiv de la 1 la n-1, la care se adauga v[0] sau v[n-1], in
+functie de maxim. 
+
+dp[i][j] = raspunsul optima pentru elementele de la i la j din vectorul v
+dp[i][j] = Max(v[j] - dp[j+1][k], v[k] - dp[j][k-1])
+
+=============================== Problema 4 ====================================
+
+Va urma...
+
+===============================================================================
